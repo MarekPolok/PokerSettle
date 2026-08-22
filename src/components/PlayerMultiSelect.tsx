@@ -5,14 +5,15 @@ import { strings } from '../strings.pl'
 interface PlayerMultiSelectProps {
   selectedIds: string[]
   onChange: (ids: string[]) => void
+  excludeIds?: string[]
 }
 
-export function PlayerMultiSelect({ selectedIds, onChange }: PlayerMultiSelectProps) {
+export function PlayerMultiSelect({ selectedIds, onChange, excludeIds = [] }: PlayerMultiSelectProps) {
   const { players, loading, error, add } = usePlayers()
   const [newName, setNewName] = useState('')
   const [adding, setAdding] = useState(false)
 
-  const activePlayers = players.filter((p) => !p.is_archived)
+  const activePlayers = players.filter((p) => !p.is_archived && !excludeIds.includes(p.id))
 
   function toggle(id: string) {
     onChange(selectedIds.includes(id) ? selectedIds.filter((x) => x !== id) : [...selectedIds, id])

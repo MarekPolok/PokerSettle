@@ -4,6 +4,7 @@
 export const strings = {
   common: {
     loading: 'Ładowanie…',
+    cancel: 'Anuluj',
   },
   nav: {
     home: 'Strona główna',
