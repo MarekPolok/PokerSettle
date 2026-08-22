@@ -2,6 +2,9 @@
 // only what renders to the user should come from this file.
 
 export const strings = {
+  common: {
+    loading: 'Ładowanie…',
+  },
   nav: {
     home: 'Strona główna',
     newSession: 'Nowa sesja',
