@@ -1,32 +1,19 @@
-# React + TypeScript + Vite
+# Poker Settle
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A shared, mobile-first web app for tracking poker buy-ins and cash-outs during trips, with an automatic "who owes who" report and an all-time leaderboard. See `SPEC.md` (if present) for the full product spec.
 
-Currently, two official plugins are available:
+Stack: React + Vite + TypeScript + Tailwind CSS + React Router, Supabase (Postgres + Realtime) for the backend, deployed on Netlify.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local development
 
-## React Compiler
+1. Copy `.env.example` to `.env.local` and fill in your Supabase project's URL and anon key (Project Settings → API in the Supabase dashboard).
+2. Run the SQL schema in the Supabase SQL editor (see spec §4), and disable Row-Level Security on all six tables (or add permissive policies) — this app has no login, so it relies on an open anon key by design.
+3. Enable Realtime on `sessions`, `legs`, `leg_participants`, `buy_ins`, `cash_outs` (and optionally `players`) via the Supabase Table Editor.
+4. `npm install`
+5. `npm run dev`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deployment (Netlify)
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+1. Connect this GitHub repo to a new Netlify site. Build command and publish directory are already configured via `netlify.toml`.
+2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as environment variables in Netlify's site settings (same values as your `.env.local`).
+3. Deploy. `netlify.toml` includes the SPA redirect rule so client-side routes don't 404 on refresh/deep link.
