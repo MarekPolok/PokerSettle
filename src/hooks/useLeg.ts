@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
 import { addLegParticipants, getLeg, getLegParticipants, reconcileLeg as reconcileLegApi } from '../api/legs'
 import type { LegParticipantWithPlayer } from '../api/legs'
 import { addBuyIn, deleteBuyIn, listBuyInsForLeg, updateBuyIn } from '../api/buyIns'
@@ -38,6 +39,39 @@ export function useLeg(legId: string | undefined) {
   useEffect(() => {
     refetch()
   }, [refetch])
+
+  const refetchRef = useRef(refetch)
+  refetchRef.current = refetch
+
+  useEffect(() => {
+    if (!legId) return
+    let timeout: ReturnType<typeof setTimeout> | null = null
+    const scheduleRefetch = () => {
+      if (timeout) clearTimeout(timeout)
+      timeout = setTimeout(() => refetchRef.current(), 150)
+    }
+
+    const channel = supabase
+      .channel(`leg-${legId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'legs', filter: `id=eq.${legId}` }, scheduleRefetch)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'leg_participants', filter: `leg_id=eq.${legId}` },
+        scheduleRefetch,
+      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'buy_ins', filter: `leg_id=eq.${legId}` }, scheduleRefetch)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'cash_outs', filter: `leg_id=eq.${legId}` },
+        scheduleRefetch,
+      )
+      .subscribe()
+
+    return () => {
+      if (timeout) clearTimeout(timeout)
+      supabase.removeChannel(channel)
+    }
+  }, [legId])
 
   const logBuyIn = useCallback(
     async (playerId: string, amount: number) => {

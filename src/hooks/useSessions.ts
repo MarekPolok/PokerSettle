@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
 import { getSessionPotTotal, listSessions } from '../api/sessions'
 import type { Session } from '../types'
 
@@ -32,6 +33,27 @@ export function useSessions() {
   useEffect(() => {
     refetch()
   }, [refetch])
+
+  const refetchRef = useRef(refetch)
+  refetchRef.current = refetch
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout> | null = null
+    const scheduleRefetch = () => {
+      if (timeout) clearTimeout(timeout)
+      timeout = setTimeout(() => refetchRef.current(), 150)
+    }
+
+    const channel = supabase
+      .channel('sessions-list')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'sessions' }, scheduleRefetch)
+      .subscribe()
+
+    return () => {
+      if (timeout) clearTimeout(timeout)
+      supabase.removeChannel(channel)
+    }
+  }, [])
 
   return { sessions, loading, error, refetch }
 }
