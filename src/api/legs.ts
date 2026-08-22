@@ -25,6 +25,15 @@ export async function getLegParticipants(legId: string): Promise<LegParticipantW
   }))
 }
 
+export async function reconcileLeg(legId: string): Promise<void> {
+  const { error } = await supabase
+    .from('legs')
+    .update({ status: 'reconciled', reconciled_at: new Date().toISOString() })
+    .eq('id', legId)
+
+  if (error) throw error
+}
+
 export async function addLegParticipants(legId: string, playerIds: string[]): Promise<void> {
   if (playerIds.length === 0) return
   const { error } = await supabase
