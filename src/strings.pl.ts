@@ -1,0 +1,88 @@
+// All user-facing copy lives here (Appendix A of the spec). Code/comments stay in English;
+// only what renders to the user should come from this file.
+
+export const strings = {
+  nav: {
+    home: 'Strona główna',
+    newSession: 'Nowa sesja',
+    rankings: 'Ranking',
+    players: 'Gracze',
+  },
+  home: {
+    resumeBadge: 'Wznów',
+  },
+  players: {
+    title: 'Gracze',
+    addPlayer: 'Dodaj gracza',
+    archive: 'Archiwizuj',
+    namePlaceholder: 'Imię gracza',
+  },
+  newSession: {
+    title: 'Nowa sesja',
+    sessionNameLabel: 'Nazwa sesji',
+    sessionNamePlaceholder: 'np. Mecz w Jaworznie',
+    start: 'Rozpocznij',
+  },
+  session: {
+    label: 'Sesja',
+  },
+  leg: {
+    label: 'Odcinek',
+    defaultLabelLeg1: 'Tam',
+    defaultLabelLeg2: 'Powrót',
+    ofTwo: (legOrder: number) => `Odcinek ${legOrder} z 2`,
+    headerWithOfTwo: (label: string, legOrder: number) => `${label} (odcinek ${legOrder} z 2)`,
+  },
+  buyIns: {
+    label: 'Wpłata',
+    labelPlural: 'Wpłaty',
+    customAmount: 'Inna kwota',
+    addPlayerToLeg: 'Dodaj gracza do tego odcinka',
+    finish: 'Zakończ wpłaty',
+    finishArrow: 'Zakończ wpłaty →',
+    totalForPlayer: 'Suma wpłat',
+    quickAmounts: [25, 50] as const,
+  },
+  chipCount: {
+    title: 'Stan żetonów',
+    howManyChips: 'Ile żetonów zostało?',
+    totalBuyIns: 'Suma wpłat',
+    totalChips: 'Suma żetonów',
+    matches: 'Zgadza się',
+    short: (amount: string) => `Brakuje: ${amount}`,
+    over: (amount: string) => `Nadwyżka: ${amount}`,
+    finishLeg: 'Zakończ odcinek',
+    editChipCounts: 'Edytuj stan żetonów',
+    backToBuyIns: 'Wróć do wpłat',
+  },
+  betweenLegs: {
+    addSecondLeg: 'Dodaj drugi odcinek (Powrót)',
+    finishWithThisLegOnly: 'Zakończ sesję (tylko ten odcinek)',
+    finishSession: 'Zakończ sesję',
+  },
+  summary: {
+    title: 'Podsumowanie sesji',
+    player: 'Gracz',
+    net: 'Bilans',
+    totalNet: 'Bilans całkowity',
+    totalPot: 'Cała pula',
+    up: 'Na plusie',
+    down: 'Na minusie',
+    copyShare: 'Kopiuj / Udostępnij podsumowanie',
+    reopenSession: 'Wznów edycję sesji',
+    markComplete: 'Zakończ i zapisz sesję',
+  },
+  rankings: {
+    title: 'Ranking',
+    player: 'Gracz',
+    allTimeNet: 'Bilans całkowity',
+    sessionsPlayed: 'Rozegrane sesje',
+    avgPerSession: 'Średnia na sesję',
+  },
+  shareTemplate: {
+    header: (sessionName: string) => `🏁 ${sessionName} — Podsumowanie pokera`,
+    pot: (amount: string) => `Cała pula: ${amount}`,
+    lineUp: (name: string, amount: string) => `🟢 ${name}: +${amount}`,
+    lineDown: (name: string, amount: string) => `🔴 ${name}: ${amount}`,
+  },
+} as const

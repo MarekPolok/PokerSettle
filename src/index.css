@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+#root {
+  min-height: 100svh;
+}
