@@ -25,8 +25,9 @@ export function usePlayers() {
 
   const add = useCallback(
     async (name: string) => {
-      await addPlayer(name)
+      const player = await addPlayer(name)
       await refetch()
+      return player
     },
     [refetch],
   )
