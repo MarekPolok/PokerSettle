@@ -1,5 +1,9 @@
 import { supabase } from '../lib/supabaseClient'
-import { addLegParticipants, reopenLeg } from './legs'
+import { addLegParticipants, getLegParticipants, reopenLeg } from './legs'
+import { listBuyInsForLeg } from './buyIns'
+import { listCashOutsForLeg } from './cashOuts'
+import { round2 } from '../lib/calculations'
+import type { LegDetail } from '../lib/calculations'
 import type { Leg, Session } from '../types'
 
 export async function createSession(
@@ -58,4 +62,35 @@ export async function reopenSessionForEditing(sessionId: string): Promise<Leg[]>
   await reopenSession(sessionId)
   await Promise.all(legs.filter((l) => l.status === 'reconciled').map((l) => reopenLeg(l.id)))
   return legs
+}
+
+export async function getFullSession(sessionId: string): Promise<{ session: Session; legsData: LegDetail[] }> {
+  const { session, legs } = await getSessionWithLegs(sessionId)
+  const legsData = await Promise.all(
+    legs.map(async (leg) => {
+      const [participants, buyIns, cashOuts] = await Promise.all([
+        getLegParticipants(leg.id),
+        listBuyInsForLeg(leg.id),
+        listCashOutsForLeg(leg.id),
+      ])
+      return { leg, participants, buyIns, cashOuts }
+    }),
+  )
+  return { session, legsData }
+}
+
+export async function listSessions(): Promise<Session[]> {
+  const { data, error } = await supabase.from('sessions').select('*').order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function getSessionPotTotal(sessionId: string): Promise<number> {
+  const { data, error } = await supabase
+    .from('buy_ins')
+    .select('amount, legs!inner(session_id)')
+    .eq('legs.session_id', sessionId)
+
+  if (error) throw error
+  return round2((data ?? []).reduce((sum, b) => sum + b.amount, 0))
 }

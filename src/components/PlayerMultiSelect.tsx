@@ -26,7 +26,9 @@ export function PlayerMultiSelect({ selectedIds, onChange, excludeIds = [] }: Pl
     try {
       const player = await add(trimmed)
       onChange([...selectedIds, player.id])
-      setNewName('')
+      // Only clear if the user hasn't already started typing the next name —
+      // otherwise this resolving late (after they started typing) wipes it out.
+      setNewName((current) => (current === trimmed ? '' : current))
     } finally {
       setAdding(false)
     }

@@ -16,6 +16,7 @@ export const strings = {
   },
   home: {
     resumeBadge: 'Wznów',
+    empty: 'Brak sesji. Rozpocznij nową!',
   },
   players: {
     title: 'Gracze',
@@ -84,6 +85,7 @@ export const strings = {
     allTimeNet: 'Bilans całkowity',
     sessionsPlayed: 'Rozegrane sesje',
     avgPerSession: 'Średnia na sesję',
+    empty: 'Brak ukończonych sesji.',
   },
   shareTemplate: {
     header: (sessionName: string) => `🏁 ${sessionName} — Podsumowanie pokera`,

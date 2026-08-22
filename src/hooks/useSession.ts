@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getSessionWithLegs } from '../api/sessions'
-import { getLegParticipants } from '../api/legs'
-import { listBuyInsForLeg } from '../api/buyIns'
-import { listCashOutsForLeg } from '../api/cashOuts'
+import { getFullSession } from '../api/sessions'
 import type { LegDetail } from '../lib/calculations'
 import type { Session } from '../types'
 
@@ -16,19 +13,9 @@ export function useSession(sessionId: string | undefined) {
     if (!sessionId) return
     setLoading(true)
     try {
-      const { session, legs } = await getSessionWithLegs(sessionId)
-      const details = await Promise.all(
-        legs.map(async (leg) => {
-          const [participants, buyIns, cashOuts] = await Promise.all([
-            getLegParticipants(leg.id),
-            listBuyInsForLeg(leg.id),
-            listCashOutsForLeg(leg.id),
-          ])
-          return { leg, participants, buyIns, cashOuts }
-        }),
-      )
+      const { session, legsData } = await getFullSession(sessionId)
       setSession(session)
-      setLegsData(details)
+      setLegsData(legsData)
       setError(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err))
