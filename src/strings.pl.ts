@@ -5,6 +5,8 @@ export const strings = {
   common: {
     loading: 'Ładowanie…',
     cancel: 'Anuluj',
+    copied: 'Skopiowano!',
+    sessionCompletedLabel: 'Sesja zakończona',
   },
   nav: {
     home: 'Strona główna',
