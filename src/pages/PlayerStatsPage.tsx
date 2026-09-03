@@ -43,7 +43,7 @@ export function PlayerStatsPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton to="/players" />
+      <BackButton to={backTo} />
       <h1 className="mb-4 text-2xl font-semibold">{player.name}</h1>
 
       {ranking ? (
