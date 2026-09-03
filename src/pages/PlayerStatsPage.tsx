@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { usePlayerStats } from '../hooks/usePlayerStats'
 import { BackButton } from '../components/BackButton'
@@ -11,7 +11,10 @@ import type { PlayerChartPoint } from '../types'
 
 export function PlayerStatsPage() {
   const { playerId } = useParams()
+  const location = useLocation()
   const { player, ranking, history, loading, error } = usePlayerStats(playerId)
+
+  const backTo = (location.state as { from?: string } | null)?.from === 'rankings' ? '/rankings' : '/players'
 
   const chartRows = useMemo<PlayerChartPoint[]>(() => {
     return [...history].reverse().reduce<PlayerChartPoint[]>((rows, h) => {
@@ -24,7 +27,7 @@ export function PlayerStatsPage() {
   if (loading && !player) {
     return (
       <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton to="/players" />
+        <BackButton to={backTo} />
         {strings.common.loading}
       </main>
     )
@@ -32,7 +35,7 @@ export function PlayerStatsPage() {
   if (error || !player) {
     return (
       <main className="mx-auto max-w-md p-4 text-red-600">
-        <BackButton to="/players" />
+        <BackButton to={backTo} />
         {error ?? strings.playerStats.notFound}
       </main>
     )

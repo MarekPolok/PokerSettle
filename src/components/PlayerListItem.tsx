@@ -10,7 +10,11 @@ interface PlayerListItemProps {
 export function PlayerListItem({ player, onArchive }: PlayerListItemProps) {
   return (
     <li className="flex items-center justify-between rounded-lg border border-slate-200 px-4 py-3">
-      <Link to={`/players/${player.id}`} className="font-medium text-slate-900 underline-offset-2 hover:underline">
+      <Link
+        to={`/players/${player.id}`}
+        state={{ from: 'players' }}
+        className="font-medium text-slate-900 underline-offset-2 hover:underline"
+      >
         {player.name}
       </Link>
       <button

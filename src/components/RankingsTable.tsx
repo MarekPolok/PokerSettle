@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { formatCurrency } from '../lib/format'
 import type { PlayerRanking } from '../types'
@@ -12,9 +13,13 @@ export function RankingsTable({ rankings }: RankingsTableProps) {
       {rankings.map((r) => (
         <li key={r.playerId} className="rounded-lg border border-slate-200 p-3">
           <div className="flex items-center justify-between gap-2">
-            <span className="font-medium">
+            <Link
+              to={`/players/${r.playerId}`}
+              state={{ from: 'rankings' }}
+              className="font-medium text-slate-900 underline-offset-2 hover:underline"
+            >
               #{r.rank} {r.playerName}
-            </span>
+            </Link>
             <span className={`text-lg font-semibold ${r.totalNet >= 0 ? 'text-emerald-700' : 'text-red-700'}`}>
               {formatCurrency(r.totalNet)}
             </span>
