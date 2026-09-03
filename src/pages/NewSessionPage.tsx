@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
 import { createSession } from '../api/sessions'
+import { BackButton } from '../components/BackButton'
 
 export function NewSessionPage() {
   const navigate = useNavigate()
@@ -28,6 +29,7 @@ export function NewSessionPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-4 text-2xl font-semibold">{strings.newSession.title}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>

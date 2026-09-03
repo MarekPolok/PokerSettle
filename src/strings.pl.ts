@@ -7,6 +7,7 @@ export const strings = {
     cancel: 'Anuluj',
     copied: 'Skopiowano!',
     sessionCompletedLabel: 'Sesja zakończona',
+    back: 'Wróć',
   },
   nav: {
     home: 'Strona główna',

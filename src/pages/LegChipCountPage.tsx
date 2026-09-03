@@ -4,6 +4,7 @@ import { useLeg } from '../hooks/useLeg'
 import { ChipCountRow } from '../components/ChipCountRow'
 import { ReconciliationBanner } from '../components/ReconciliationBanner'
 import { reconciliationStatus } from '../lib/calculations'
+import { BackButton } from '../components/BackButton'
 
 export function LegChipCountPage() {
   const { sessionId, legId } = useParams()
@@ -11,10 +12,20 @@ export function LegChipCountPage() {
   const { leg, participants, buyIns, cashOuts, loading, error, setChipCount, reconcile } = useLeg(legId)
 
   if (loading && !leg) {
-    return <main className="mx-auto max-w-md p-4 text-slate-500">{strings.common.loading}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-slate-500">
+        <BackButton />
+        {strings.common.loading}
+      </main>
+    )
   }
   if (error || !leg) {
-    return <main className="mx-auto max-w-md p-4 text-red-600">{error ?? 'Nie znaleziono odcinka'}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-red-600">
+        <BackButton />
+        {error ?? 'Nie znaleziono odcinka'}
+      </main>
+    )
   }
 
   const status = reconciliationStatus(buyIns, cashOuts)
@@ -27,6 +38,7 @@ export function LegChipCountPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-1 text-2xl font-semibold">{strings.chipCount.title}</h1>
       <p className="mb-4 text-slate-500">{strings.leg.headerWithOfTwo(leg.label, leg.leg_order)}</p>
 

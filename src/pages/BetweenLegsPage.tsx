@@ -4,6 +4,7 @@ import { strings } from '../strings.pl'
 import { getSessionWithLegs } from '../api/sessions'
 import { createLeg } from '../api/legs'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
+import { BackButton } from '../components/BackButton'
 import type { Leg } from '../types'
 
 export function BetweenLegsPage() {
@@ -28,7 +29,12 @@ export function BetweenLegsPage() {
   }, [refetch])
 
   if (loading) {
-    return <main className="mx-auto max-w-md p-4 text-slate-500">{strings.common.loading}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-slate-500">
+        <BackButton />
+        {strings.common.loading}
+      </main>
+    )
   }
 
   const hasSecondLeg = legs.some((l) => l.leg_order === 2)
@@ -46,6 +52,7 @@ export function BetweenLegsPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-4 text-2xl font-semibold">{strings.leg.label}</h1>
 
       {!hasSecondLeg &&

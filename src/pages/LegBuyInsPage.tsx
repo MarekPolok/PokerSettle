@@ -4,6 +4,7 @@ import { strings } from '../strings.pl'
 import { useLeg } from '../hooks/useLeg'
 import { BuyInRow } from '../components/BuyInRow'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
+import { BackButton } from '../components/BackButton'
 
 export function LegBuyInsPage() {
   const { sessionId, legId } = useParams()
@@ -28,14 +29,25 @@ export function LegBuyInsPage() {
   }
 
   if (loading && !leg) {
-    return <main className="mx-auto max-w-md p-4 text-slate-500">{strings.common.loading}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-slate-500">
+        <BackButton />
+        {strings.common.loading}
+      </main>
+    )
   }
   if (error || !leg) {
-    return <main className="mx-auto max-w-md p-4 text-red-600">{error ?? 'Nie znaleziono odcinka'}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-red-600">
+        <BackButton />
+        {error ?? 'Nie znaleziono odcinka'}
+      </main>
+    )
   }
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-4 text-2xl font-semibold">{strings.leg.headerWithOfTwo(leg.label, leg.leg_order)}</h1>
 
       <ul className="flex flex-col gap-3">

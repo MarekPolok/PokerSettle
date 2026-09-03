@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { strings } from '../strings.pl'
 import { usePlayers } from '../hooks/usePlayers'
 import { PlayerListItem } from '../components/PlayerListItem'
+import { BackButton } from '../components/BackButton'
 
 export function PlayersPage() {
   const { players, loading, error, add, archive } = usePlayers()
@@ -25,6 +26,7 @@ export function PlayersPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-4 text-2xl font-semibold">{strings.players.title}</h1>
 
       <form onSubmit={handleAdd} className="mb-4 flex gap-2">

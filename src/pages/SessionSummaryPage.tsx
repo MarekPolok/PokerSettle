@@ -8,6 +8,7 @@ import { sessionSummary } from '../lib/calculations'
 import { buildShareText } from '../lib/share'
 import { formatCurrency } from '../lib/format'
 import { completeSession, reopenSessionForEditing } from '../api/sessions'
+import { BackButton } from '../components/BackButton'
 
 export function SessionSummaryPage() {
   const { sessionId } = useParams()
@@ -16,10 +17,20 @@ export function SessionSummaryPage() {
   const [busy, setBusy] = useState(false)
 
   if (loading && !session) {
-    return <main className="mx-auto max-w-md p-4 text-slate-500">{strings.common.loading}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-slate-500">
+        <BackButton />
+        {strings.common.loading}
+      </main>
+    )
   }
   if (error || !session) {
-    return <main className="mx-auto max-w-md p-4 text-red-600">{error ?? 'Nie znaleziono sesji'}</main>
+    return (
+      <main className="mx-auto max-w-md p-4 text-red-600">
+        <BackButton />
+        {error ?? 'Nie znaleziono sesji'}
+      </main>
+    )
   }
 
   const legs = legsData.map((d) => d.leg)
@@ -50,6 +61,7 @@ export function SessionSummaryPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <BackButton />
       <h1 className="mb-1 text-2xl font-semibold">{strings.summary.title}</h1>
       <p className="mb-4 text-slate-500">{session.name}</p>
 
