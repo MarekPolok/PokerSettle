@@ -7,7 +7,7 @@ import { PageHeader } from '../components/PageHeader'
 
 export function PlayersPage() {
   const { isAdmin } = useAuth()
-  const { players, loading, error, add, archive } = usePlayers()
+  const { players, loading, error, add } = usePlayers()
   const [name, setName] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -55,7 +55,7 @@ export function PlayersPage() {
 
       <ul className="flex flex-col gap-2">
         {activePlayers.map((player) => (
-          <PlayerListItem key={player.id} player={player} onArchive={archive} />
+          <PlayerListItem key={player.id} player={player} />
         ))}
       </ul>
     </main>
