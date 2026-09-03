@@ -1,5 +1,5 @@
 import type { LegParticipantWithPlayer } from '../api/legs'
-import type { BuyIn, CashOut, Leg, PlayerRanking } from '../types'
+import type { BuyIn, CashOut, Leg, PlayerRanking, Session } from '../types'
 
 export function round2(n: number): number {
   return Math.round(n * 100) / 100
@@ -109,4 +109,28 @@ export function allTimeRankings(sessionsData: { legsData: LegDetail[] }[]): Play
   })
 
   return list
+}
+
+export interface PlayerSessionHistoryRow {
+  sessionId: string
+  sessionName: string
+  completedAt: string | null
+  net: number
+}
+
+export function playerSessionHistory(
+  playerId: string,
+  sessionsData: { session: Session; legsData: LegDetail[] }[],
+): PlayerSessionHistoryRow[] {
+  const rows = sessionsData
+    .map(({ session, legsData }) => {
+      const row = sessionSummary(legsData).rows.find((r) => r.playerId === playerId)
+      if (!row) return null
+      return { sessionId: session.id, sessionName: session.name, completedAt: session.completed_at, net: row.totalNet }
+    })
+    .filter((row): row is PlayerSessionHistoryRow => row !== null)
+
+  rows.sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))
+
+  return rows
 }

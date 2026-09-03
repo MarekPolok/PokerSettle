@@ -88,6 +88,13 @@ export const strings = {
     avgPerSession: 'Średnia na sesję',
     empty: 'Brak ukończonych sesji.',
   },
+  playerStats: {
+    historyTitle: 'Historia sesji',
+    trendTitle: 'Suma w czasie',
+    perSessionTitle: 'Wynik z sesji',
+    rank: (n: number) => `Miejsce w rankingu: #${n}`,
+    notFound: 'Nie znaleziono gracza',
+  },
   shareTemplate: {
     header: (sessionName: string) => `🏁 ${sessionName} — Podsumowanie pokera`,
     pot: (amount: string) => `Cała pula: ${amount}`,

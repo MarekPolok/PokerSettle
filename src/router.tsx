@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
 import { PlayersPage } from './pages/PlayersPage'
+import { PlayerStatsPage } from './pages/PlayerStatsPage'
 import { NewSessionPage } from './pages/NewSessionPage'
 import { LegBuyInsPage } from './pages/LegBuyInsPage'
 import { LegChipCountPage } from './pages/LegChipCountPage'
@@ -13,6 +14,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/players" element={<PlayersPage />} />
+      <Route path="/players/:playerId" element={<PlayerStatsPage />} />
       <Route path="/sessions/new" element={<NewSessionPage />} />
       <Route path="/sessions/:sessionId" element={<SessionSummaryPage />} />
       <Route path="/sessions/:sessionId/between-legs" element={<BetweenLegsPage />} />

@@ -11,6 +11,13 @@ export async function listPlayers(): Promise<Player[]> {
   return data
 }
 
+export async function getPlayer(id: string): Promise<Player> {
+  const { data, error } = await supabase.from('players').select('*').eq('id', id).single()
+
+  if (error) throw error
+  return data
+}
+
 export async function addPlayer(name: string): Promise<Player> {
   const { data, error } = await supabase
     .from('players')

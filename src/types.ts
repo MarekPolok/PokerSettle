@@ -79,3 +79,11 @@ export interface PlayerRanking {
   avgPerSession: number
   rank: number
 }
+
+export interface PlayerChartPoint {
+  order: number
+  sessionName: string
+  date: string | null
+  net: number
+  cumulative: number
+}
