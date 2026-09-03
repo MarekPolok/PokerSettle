@@ -7,7 +7,7 @@ interface BackButtonProps {
 
 export function BackButton({ to = '/' }: BackButtonProps) {
   return (
-    <Link to={to} className="mb-4 inline-flex items-center gap-1 text-slate-600">
+    <Link to={to} className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-400">
       <span aria-hidden="true">←</span>
       {strings.common.back}
     </Link>

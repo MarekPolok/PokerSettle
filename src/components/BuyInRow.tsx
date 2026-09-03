@@ -22,14 +22,14 @@ export function BuyInRow({ player, buyIns, onLog, onEdit, onDelete }: BuyInRowPr
   const total = sumBuyIns(playerBuyIns)
 
   return (
-    <li className="rounded-lg border border-slate-200 p-3">
+    <li className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">
       <div className="flex items-center justify-between gap-2">
         <div>
           <p className="font-medium">{player.name}</p>
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="text-sm text-slate-500 underline decoration-dotted"
+            className="text-sm text-slate-500 underline decoration-dotted dark:text-slate-400"
           >
             {strings.buyIns.totalForPlayer}: {formatCurrency(total)}
           </button>
@@ -48,7 +48,7 @@ export function BuyInRow({ player, buyIns, onLog, onEdit, onDelete }: BuyInRowPr
           <button
             type="button"
             onClick={() => setKeypadOpen(true)}
-            className="rounded-lg bg-slate-700 px-3 py-2 font-medium text-white"
+            className="rounded-lg bg-slate-700 px-3 py-2 font-medium text-white dark:bg-slate-600"
           >
             {strings.buyIns.customAmount}
           </button>

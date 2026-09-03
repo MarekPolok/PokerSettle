@@ -8,6 +8,8 @@ export const strings = {
     copied: 'Skopiowano!',
     sessionCompletedLabel: 'Sesja zakończona',
     back: 'Wróć',
+    switchToLight: 'Przełącz na jasny motyw',
+    switchToDark: 'Przełącz na ciemny motyw',
   },
   nav: {
     home: 'Strona główna',
@@ -94,6 +96,14 @@ export const strings = {
     perSessionTitle: 'Wynik z sesji',
     rank: (n: number) => `Miejsce w rankingu: #${n}`,
     notFound: 'Nie znaleziono gracza',
+  },
+  auth: {
+    login: 'Zaloguj',
+    logout: 'Wyloguj',
+    loginTitle: 'Logowanie',
+    passphrasePlaceholder: 'Hasło',
+    submit: 'Zaloguj się',
+    loginError: 'Nieprawidłowe hasło',
   },
   shareTemplate: {
     header: (sessionName: string) => `🏁 ${sessionName} — Podsumowanie pokera`,

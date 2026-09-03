@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { usePlayerStats } from '../hooks/usePlayerStats'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 import { PlayerNetTrendChart } from '../components/PlayerNetTrendChart'
 import { PlayerSessionResultsChart } from '../components/PlayerSessionResultsChart'
 import { formatCurrency, formatDate } from '../lib/format'
@@ -26,16 +26,16 @@ export function PlayerStatsPage() {
 
   if (loading && !player) {
     return (
-      <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton to={backTo} />
+      <main className="mx-auto max-w-md p-4 text-slate-500 dark:text-slate-400">
+        <PageHeader backTo={backTo} />
         {strings.common.loading}
       </main>
     )
   }
   if (error || !player) {
     return (
-      <main className="mx-auto max-w-md p-4 text-red-600">
-        <BackButton to={backTo} />
+      <main className="mx-auto max-w-md p-4 text-red-600 dark:text-red-400">
+        <PageHeader backTo={backTo} />
         {error ?? strings.playerStats.notFound}
       </main>
     )
@@ -43,19 +43,21 @@ export function PlayerStatsPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton to={backTo} />
+      <PageHeader backTo={backTo} />
       <h1 className="mb-4 text-2xl font-semibold">{player.name}</h1>
 
       {ranking ? (
         <>
-          <div className="mb-4 rounded-lg border border-slate-200 p-3">
+          <div className="mb-4 rounded-lg border border-slate-200 p-3 dark:border-slate-700">
             <div className="flex items-center justify-between gap-2">
               <span className="font-medium">{strings.rankings.allTimeNet}</span>
-              <span className={`text-lg font-semibold ${ranking.totalNet >= 0 ? 'text-emerald-700' : 'text-red-700'}`}>
+              <span
+                className={`text-lg font-semibold ${ranking.totalNet >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}
+              >
                 {formatCurrency(ranking.totalNet)}
               </span>
             </div>
-            <div className="mt-1 flex gap-4 text-sm text-slate-500">
+            <div className="mt-1 flex gap-4 text-sm text-slate-500 dark:text-slate-400">
               <span>
                 {strings.rankings.sessionsPlayed}: {ranking.sessionsPlayed}
               </span>
@@ -63,29 +65,35 @@ export function PlayerStatsPage() {
                 {strings.rankings.avgPerSession}: {formatCurrency(ranking.avgPerSession)}
               </span>
             </div>
-            <p className="mt-1 text-sm text-slate-500">{strings.playerStats.rank(ranking.rank)}</p>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{strings.playerStats.rank(ranking.rank)}</p>
           </div>
 
           <h2 className="mb-2 text-lg font-semibold">{strings.playerStats.trendTitle}</h2>
-          <div className="mb-4 rounded-lg border border-slate-200 p-3">
+          <div className="mb-4 rounded-lg border border-slate-200 p-3 dark:border-slate-700">
             <PlayerNetTrendChart data={chartRows} />
           </div>
 
           <h2 className="mb-2 text-lg font-semibold">{strings.playerStats.perSessionTitle}</h2>
-          <div className="mb-4 rounded-lg border border-slate-200 p-3">
+          <div className="mb-4 rounded-lg border border-slate-200 p-3 dark:border-slate-700">
             <PlayerSessionResultsChart data={chartRows} />
           </div>
 
           <h2 className="mb-2 text-lg font-semibold">{strings.playerStats.historyTitle}</h2>
           <ul className="flex flex-col gap-2">
             {history.map((h) => (
-              <li key={h.sessionId} className="rounded-lg border border-slate-200 p-3">
+              <li key={h.sessionId} className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">
                 <Link to={`/sessions/${h.sessionId}`} className="flex items-center justify-between gap-2">
                   <span>
                     <span className="font-medium">{h.sessionName}</span>
-                    {h.completedAt && <span className="ml-2 text-sm text-slate-500">{formatDate(h.completedAt)}</span>}
+                    {h.completedAt && (
+                      <span className="ml-2 text-sm text-slate-500 dark:text-slate-400">
+                        {formatDate(h.completedAt)}
+                      </span>
+                    )}
                   </span>
-                  <span className={`font-semibold ${h.net >= 0 ? 'text-emerald-700' : 'text-red-700'}`}>
+                  <span
+                    className={`font-semibold ${h.net >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}
+                  >
                     {formatCurrency(h.net)}
                   </span>
                 </Link>
@@ -94,7 +102,7 @@ export function PlayerStatsPage() {
           </ul>
         </>
       ) : (
-        <p className="text-slate-500">{strings.rankings.empty}</p>
+        <p className="text-slate-500 dark:text-slate-400">{strings.rankings.empty}</p>
       )}
     </main>
   )

@@ -6,9 +6,10 @@ import type { SessionListEntry } from '../hooks/useSessions'
 interface SessionListItemProps {
   session: SessionListEntry
   onResume: (sessionId: string) => void
+  canResume: boolean
 }
 
-export function SessionListItem({ session, onResume }: SessionListItemProps) {
+export function SessionListItem({ session, onResume, canResume }: SessionListItemProps) {
   const isInProgress = session.status === 'in_progress'
 
   const content = (
@@ -16,7 +17,7 @@ export function SessionListItem({ session, onResume }: SessionListItemProps) {
       <div>
         <p className="font-medium">{session.name}</p>
         {!isInProgress && (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             {formatDate(session.completed_at ?? session.created_at)}
             {session.potTotal !== null && ` · ${formatCurrency(session.potTotal)}`}
           </p>
@@ -31,12 +32,15 @@ export function SessionListItem({ session, onResume }: SessionListItemProps) {
   )
 
   if (isInProgress) {
+    if (!canResume) {
+      return <li className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">{content}</li>
+    }
     return (
       <li>
         <button
           type="button"
           onClick={() => onResume(session.id)}
-          className="w-full rounded-lg border border-slate-200 p-3 text-left"
+          className="w-full rounded-lg border border-slate-200 p-3 text-left dark:border-slate-700"
         >
           {content}
         </button>
@@ -46,7 +50,7 @@ export function SessionListItem({ session, onResume }: SessionListItemProps) {
 
   return (
     <li>
-      <Link to={`/sessions/${session.id}`} className="block rounded-lg border border-slate-200 p-3">
+      <Link to={`/sessions/${session.id}`} className="block rounded-lg border border-slate-200 p-3 dark:border-slate-700">
         {content}
       </Link>
     </li>

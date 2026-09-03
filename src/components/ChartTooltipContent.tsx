@@ -14,12 +14,14 @@ export function ChartTooltipContent({ active, payload, valueKey }: ChartTooltipC
   const value = point[valueKey]
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
-      <p className="text-sm text-slate-500">
+    <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <p className="text-sm text-slate-500 dark:text-slate-400">
         {point.sessionName}
         {point.date && <> · {formatDate(point.date)}</>}
       </p>
-      <p className={`text-lg font-semibold ${value >= 0 ? 'text-emerald-700' : 'text-red-700'}`}>
+      <p
+        className={`text-lg font-semibold ${value >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}
+      >
         {formatCurrency(value)}
       </p>
     </div>

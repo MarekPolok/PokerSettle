@@ -4,7 +4,7 @@ import { strings } from '../strings.pl'
 import { getSessionWithLegs } from '../api/sessions'
 import { createLeg } from '../api/legs'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 import type { Leg } from '../types'
 
 export function BetweenLegsPage() {
@@ -30,8 +30,8 @@ export function BetweenLegsPage() {
 
   if (loading) {
     return (
-      <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-slate-500 dark:text-slate-400">
+        <PageHeader backTo="/" />
         {strings.common.loading}
       </main>
     )
@@ -52,12 +52,12 @@ export function BetweenLegsPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton />
+      <PageHeader backTo="/" />
       <h1 className="mb-4 text-2xl font-semibold">{strings.leg.label}</h1>
 
       {!hasSecondLeg &&
         (showAddLeg ? (
-          <div className="mb-4 rounded-lg border border-slate-200 p-3">
+          <div className="mb-4 rounded-lg border border-slate-200 p-3 dark:border-slate-700">
             <PlayerMultiSelect selectedIds={participantIds} onChange={setParticipantIds} />
             <button
               type="button"
@@ -81,7 +81,7 @@ export function BetweenLegsPage() {
       <button
         type="button"
         onClick={() => navigate(`/sessions/${sessionId}`)}
-        className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900"
+        className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
       >
         {hasSecondLeg ? strings.betweenLegs.finishSession : strings.betweenLegs.finishWithThisLegOnly}
       </button>

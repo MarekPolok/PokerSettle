@@ -23,10 +23,10 @@ export function ChipCountRow({ player, cashOut, onChange }: ChipCountRowProps) {
   }
 
   return (
-    <li className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 p-3">
+    <li className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 p-3 dark:border-slate-700">
       <div>
         <p className="font-medium">{player.name}</p>
-        <p className="text-sm text-slate-500">{strings.chipCount.howManyChips}</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{strings.chipCount.howManyChips}</p>
       </div>
       <input
         type="number"
@@ -37,7 +37,7 @@ export function ChipCountRow({ player, cashOut, onChange }: ChipCountRowProps) {
         onChange={(e) => setValue(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => e.key === 'Enter' && commit()}
-        className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-right"
+        className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-right dark:border-slate-600"
         placeholder="0"
       />
     </li>

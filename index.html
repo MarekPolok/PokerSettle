@@ -2,6 +2,13 @@
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      ;(function () {
+        if (localStorage.getItem('pokersettle-theme') !== 'light') {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Poker Settle</title>

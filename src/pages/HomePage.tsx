@@ -1,12 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { useSessions } from '../hooks/useSessions'
+import { useAuth } from '../hooks/useAuth'
 import { SessionListItem } from '../components/SessionListItem'
+import { PageHeader } from '../components/PageHeader'
 import { getSessionWithLegs } from '../api/sessions'
 import { listCashOutsForLeg } from '../api/cashOuts'
 
 export function HomePage() {
   const navigate = useNavigate()
+  const { isAdmin } = useAuth()
   const { sessions, loading, error } = useSessions()
 
   async function handleResume(sessionId: string) {
@@ -29,26 +32,35 @@ export function HomePage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
+      <PageHeader />
       <h1 className="mb-4 text-2xl font-semibold">{strings.nav.home}</h1>
       <nav className="mb-6 flex flex-col gap-2">
-        <Link className="rounded-lg bg-emerald-600 px-4 py-3 text-center font-medium text-white" to="/sessions/new">
-          {strings.nav.newSession}
-        </Link>
-        <Link className="rounded-lg bg-slate-200 px-4 py-3 text-center font-medium text-slate-900" to="/rankings">
+        {isAdmin && (
+          <Link className="rounded-lg bg-emerald-600 px-4 py-3 text-center font-medium text-white" to="/sessions/new">
+            {strings.nav.newSession}
+          </Link>
+        )}
+        <Link
+          className="rounded-lg bg-slate-200 px-4 py-3 text-center font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
+          to="/rankings"
+        >
           {strings.nav.rankings}
         </Link>
-        <Link className="rounded-lg bg-slate-200 px-4 py-3 text-center font-medium text-slate-900" to="/players">
+        <Link
+          className="rounded-lg bg-slate-200 px-4 py-3 text-center font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
+          to="/players"
+        >
           {strings.nav.players}
         </Link>
       </nav>
 
-      {loading && <p className="text-slate-500">{strings.common.loading}</p>}
-      {error && <p className="text-red-600">{error}</p>}
-      {!loading && sessions.length === 0 && <p className="text-slate-500">{strings.home.empty}</p>}
+      {loading && <p className="text-slate-500 dark:text-slate-400">{strings.common.loading}</p>}
+      {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
+      {!loading && sessions.length === 0 && <p className="text-slate-500 dark:text-slate-400">{strings.home.empty}</p>}
 
       <ul className="flex flex-col gap-2">
         {sessions.map((session) => (
-          <SessionListItem key={session.id} session={session} onResume={handleResume} />
+          <SessionListItem key={session.id} session={session} onResume={handleResume} canResume={isAdmin} />
         ))}
       </ul>
     </main>

@@ -8,18 +8,49 @@ import { LegChipCountPage } from './pages/LegChipCountPage'
 import { BetweenLegsPage } from './pages/BetweenLegsPage'
 import { SessionSummaryPage } from './pages/SessionSummaryPage'
 import { RankingsPage } from './pages/RankingsPage'
+import { LoginPage } from './pages/LoginPage'
+import { RequireAdmin } from './components/RequireAdmin'
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/players" element={<PlayersPage />} />
       <Route path="/players/:playerId" element={<PlayerStatsPage />} />
-      <Route path="/sessions/new" element={<NewSessionPage />} />
+      <Route
+        path="/sessions/new"
+        element={
+          <RequireAdmin>
+            <NewSessionPage />
+          </RequireAdmin>
+        }
+      />
       <Route path="/sessions/:sessionId" element={<SessionSummaryPage />} />
-      <Route path="/sessions/:sessionId/between-legs" element={<BetweenLegsPage />} />
-      <Route path="/sessions/:sessionId/legs/:legId/buy-ins" element={<LegBuyInsPage />} />
-      <Route path="/sessions/:sessionId/legs/:legId/chip-count" element={<LegChipCountPage />} />
+      <Route
+        path="/sessions/:sessionId/between-legs"
+        element={
+          <RequireAdmin>
+            <BetweenLegsPage />
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/sessions/:sessionId/legs/:legId/buy-ins"
+        element={
+          <RequireAdmin>
+            <LegBuyInsPage />
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/sessions/:sessionId/legs/:legId/chip-count"
+        element={
+          <RequireAdmin>
+            <LegChipCountPage />
+          </RequireAdmin>
+        }
+      />
       <Route path="/rankings" element={<RankingsPage />} />
     </Routes>
   )

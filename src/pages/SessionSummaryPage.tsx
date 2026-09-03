@@ -2,32 +2,34 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { useSession } from '../hooks/useSession'
+import { useAuth } from '../hooks/useAuth'
 import { SummaryTable } from '../components/SummaryTable'
 import { ShareButton } from '../components/ShareButton'
 import { sessionSummary } from '../lib/calculations'
 import { buildShareText } from '../lib/share'
 import { formatCurrency } from '../lib/format'
 import { completeSession, reopenSessionForEditing } from '../api/sessions'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 
 export function SessionSummaryPage() {
   const { sessionId } = useParams()
   const navigate = useNavigate()
+  const { isAdmin } = useAuth()
   const { session, legsData, loading, error, refetch } = useSession(sessionId)
   const [busy, setBusy] = useState(false)
 
   if (loading && !session) {
     return (
-      <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-slate-500 dark:text-slate-400">
+        <PageHeader backTo="/" />
         {strings.common.loading}
       </main>
     )
   }
   if (error || !session) {
     return (
-      <main className="mx-auto max-w-md p-4 text-red-600">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-red-600 dark:text-red-400">
+        <PageHeader backTo="/" />
         {error ?? 'Nie znaleziono sesji'}
       </main>
     )
@@ -61,9 +63,9 @@ export function SessionSummaryPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton />
+      <PageHeader backTo="/" />
       <h1 className="mb-1 text-2xl font-semibold">{strings.summary.title}</h1>
-      <p className="mb-4 text-slate-500">{session.name}</p>
+      <p className="mb-4 text-slate-500 dark:text-slate-400">{session.name}</p>
 
       <p className="mb-4 text-lg font-semibold">
         {strings.summary.totalPot}: {formatCurrency(potTotal)}
@@ -76,26 +78,32 @@ export function SessionSummaryPage() {
       <div className="flex flex-col gap-2">
         <ShareButton text={shareText} />
 
-        <button
-          type="button"
-          onClick={handleReopen}
-          disabled={busy || !allLegsReconciled}
-          className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900 disabled:opacity-50"
-        >
-          {strings.summary.reopenSession}
-        </button>
-
-        {session.status === 'completed' ? (
-          <p className="text-center text-sm text-emerald-700">{strings.common.sessionCompletedLabel}</p>
-        ) : (
+        {isAdmin && (
           <button
             type="button"
-            onClick={handleComplete}
+            onClick={handleReopen}
             disabled={busy || !allLegsReconciled}
-            className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white disabled:opacity-50"
+            className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900 disabled:opacity-50 dark:bg-slate-700 dark:text-slate-100"
           >
-            {strings.summary.markComplete}
+            {strings.summary.reopenSession}
           </button>
+        )}
+
+        {session.status === 'completed' ? (
+          <p className="text-center text-sm text-emerald-700 dark:text-emerald-400">
+            {strings.common.sessionCompletedLabel}
+          </p>
+        ) : (
+          isAdmin && (
+            <button
+              type="button"
+              onClick={handleComplete}
+              disabled={busy || !allLegsReconciled}
+              className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white disabled:opacity-50"
+            >
+              {strings.summary.markComplete}
+            </button>
+          )
         )}
       </div>
     </main>

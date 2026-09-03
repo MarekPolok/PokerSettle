@@ -4,7 +4,7 @@ import { useLeg } from '../hooks/useLeg'
 import { ChipCountRow } from '../components/ChipCountRow'
 import { ReconciliationBanner } from '../components/ReconciliationBanner'
 import { reconciliationStatus } from '../lib/calculations'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 
 export function LegChipCountPage() {
   const { sessionId, legId } = useParams()
@@ -13,16 +13,16 @@ export function LegChipCountPage() {
 
   if (loading && !leg) {
     return (
-      <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-slate-500 dark:text-slate-400">
+        <PageHeader backTo="/" />
         {strings.common.loading}
       </main>
     )
   }
   if (error || !leg) {
     return (
-      <main className="mx-auto max-w-md p-4 text-red-600">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-red-600 dark:text-red-400">
+        <PageHeader backTo="/" />
         {error ?? 'Nie znaleziono odcinka'}
       </main>
     )
@@ -38,9 +38,9 @@ export function LegChipCountPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton />
+      <PageHeader backTo="/" />
       <h1 className="mb-1 text-2xl font-semibold">{strings.chipCount.title}</h1>
-      <p className="mb-4 text-slate-500">{strings.leg.headerWithOfTwo(leg.label, leg.leg_order)}</p>
+      <p className="mb-4 text-slate-500 dark:text-slate-400">{strings.leg.headerWithOfTwo(leg.label, leg.leg_order)}</p>
 
       <ul className="mb-4 flex flex-col gap-3">
         {participants.map(({ playerId, player }) => (
@@ -69,7 +69,7 @@ export function LegChipCountPage() {
         <button
           type="button"
           onClick={() => navigate(`/sessions/${sessionId}/legs/${legId}/buy-ins`)}
-          className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900"
+          className="w-full rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
         >
           {strings.chipCount.backToBuyIns}
         </button>

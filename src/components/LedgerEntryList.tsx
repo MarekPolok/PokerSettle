@@ -26,7 +26,7 @@ export function LedgerEntryList({ entries, onEdit, onDelete }: LedgerEntryListPr
   }
 
   return (
-    <ul className="mt-2 flex flex-col gap-1 border-t border-slate-100 pt-2">
+    <ul className="mt-2 flex flex-col gap-1 border-t border-slate-100 pt-2 dark:border-slate-800">
       {entries.map((entry) => (
         <li key={entry.id} className="flex items-center justify-between text-sm">
           {editingId === entry.id ? (
@@ -39,18 +39,18 @@ export function LedgerEntryList({ entries, onEdit, onDelete }: LedgerEntryListPr
               onChange={(e) => setEditValue(e.target.value)}
               onBlur={() => commitEdit(entry.id)}
               onKeyDown={(e) => e.key === 'Enter' && commitEdit(entry.id)}
-              className="w-24 rounded border border-slate-300 px-2 py-1"
+              className="w-24 rounded border border-slate-300 px-2 py-1 dark:border-slate-600"
             />
           ) : (
             <button
               type="button"
               onClick={() => startEdit(entry)}
-              className="text-slate-700 underline decoration-dotted"
+              className="text-slate-700 underline decoration-dotted dark:text-slate-300"
             >
               {formatCurrency(entry.amount)}
             </button>
           )}
-          <button type="button" onClick={() => onDelete(entry.id)} className="px-2 text-red-600">
+          <button type="button" onClick={() => onDelete(entry.id)} className="px-2 text-red-600 dark:text-red-400">
             ✕
           </button>
         </li>

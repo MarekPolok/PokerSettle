@@ -36,13 +36,13 @@ export function PlayerMultiSelect({ selectedIds, onChange, excludeIds = [] }: Pl
 
   return (
     <div>
-      {loading && <p className="text-slate-500">{strings.common.loading}</p>}
-      {error && <p className="text-red-600">{error}</p>}
+      {loading && <p className="text-slate-500 dark:text-slate-400">{strings.common.loading}</p>}
+      {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
 
       <ul className="mb-3 flex flex-col gap-2">
         {activePlayers.map((player) => (
           <li key={player.id}>
-            <label className="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3">
+            <label className="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 dark:border-slate-700">
               <input
                 type="checkbox"
                 checked={selectedIds.includes(player.id)}
@@ -70,13 +70,13 @@ export function PlayerMultiSelect({ selectedIds, onChange, excludeIds = [] }: Pl
             }
           }}
           placeholder={strings.players.namePlaceholder}
-          className="flex-1 rounded-lg border border-slate-300 px-3 py-2"
+          className="flex-1 rounded-lg border border-slate-300 px-3 py-2 dark:border-slate-600"
         />
         <button
           type="button"
           onClick={handleAddNew}
           disabled={adding || !newName.trim()}
-          className="rounded-lg bg-slate-700 px-4 py-2 font-medium text-white disabled:opacity-50"
+          className="rounded-lg bg-slate-700 px-4 py-2 font-medium text-white disabled:opacity-50 dark:bg-slate-600"
         >
           {strings.players.addPlayer}
         </button>

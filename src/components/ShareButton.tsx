@@ -26,7 +26,7 @@ export function ShareButton({ text }: ShareButtonProps) {
     <button
       type="button"
       onClick={handleClick}
-      className="w-full rounded-lg bg-slate-700 px-4 py-3 font-medium text-white"
+      className="w-full rounded-lg bg-slate-700 px-4 py-3 font-medium text-white dark:bg-slate-600"
     >
       {copied ? strings.common.copied : strings.summary.copyShare}
     </button>

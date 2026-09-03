@@ -28,7 +28,7 @@ export function AmountKeypad({ open, onCancel, onConfirm }: AmountKeypadProps) {
       onClick={onCancel}
     >
       <div
-        className="w-full max-w-sm rounded-t-2xl bg-white p-4 sm:rounded-2xl"
+        className="w-full max-w-sm rounded-t-2xl bg-white p-4 sm:rounded-2xl dark:bg-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mb-3 text-lg font-semibold">{strings.buyIns.customAmount}</h2>
@@ -41,14 +41,14 @@ export function AmountKeypad({ open, onCancel, onConfirm }: AmountKeypadProps) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleConfirm()}
-          className="mb-4 w-full rounded-lg border border-slate-300 px-3 py-3 text-2xl"
+          className="mb-4 w-full rounded-lg border border-slate-300 px-3 py-3 text-2xl dark:border-slate-600"
           placeholder="0"
         />
         <div className="flex gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900"
+            className="flex-1 rounded-lg bg-slate-200 px-4 py-3 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
           >
             {strings.common.cancel}
           </button>

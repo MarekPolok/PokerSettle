@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { strings } from '../strings.pl'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
 import { createSession } from '../api/sessions'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 
 export function NewSessionPage() {
   const navigate = useNavigate()
@@ -29,11 +29,11 @@ export function NewSessionPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton />
+      <PageHeader backTo="/" />
       <h1 className="mb-4 text-2xl font-semibold">{strings.newSession.title}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">
+          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {strings.newSession.sessionNameLabel}
           </label>
           <input
@@ -41,13 +41,13 @@ export function NewSessionPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={strings.newSession.sessionNamePlaceholder}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 dark:border-slate-600"
           />
         </div>
 
         <PlayerMultiSelect selectedIds={selectedIds} onChange={setSelectedIds} />
 
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
 
         <button
           type="submit"

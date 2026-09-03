@@ -4,7 +4,7 @@ import { strings } from '../strings.pl'
 import { useLeg } from '../hooks/useLeg'
 import { BuyInRow } from '../components/BuyInRow'
 import { PlayerMultiSelect } from '../components/PlayerMultiSelect'
-import { BackButton } from '../components/BackButton'
+import { PageHeader } from '../components/PageHeader'
 
 export function LegBuyInsPage() {
   const { sessionId, legId } = useParams()
@@ -30,16 +30,16 @@ export function LegBuyInsPage() {
 
   if (loading && !leg) {
     return (
-      <main className="mx-auto max-w-md p-4 text-slate-500">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-slate-500 dark:text-slate-400">
+        <PageHeader backTo="/" />
         {strings.common.loading}
       </main>
     )
   }
   if (error || !leg) {
     return (
-      <main className="mx-auto max-w-md p-4 text-red-600">
-        <BackButton />
+      <main className="mx-auto max-w-md p-4 text-red-600 dark:text-red-400">
+        <PageHeader backTo="/" />
         {error ?? 'Nie znaleziono odcinka'}
       </main>
     )
@@ -47,7 +47,7 @@ export function LegBuyInsPage() {
 
   return (
     <main className="mx-auto max-w-md p-4">
-      <BackButton />
+      <PageHeader backTo="/" />
       <h1 className="mb-4 text-2xl font-semibold">{strings.leg.headerWithOfTwo(leg.label, leg.leg_order)}</h1>
 
       <ul className="flex flex-col gap-3">
@@ -65,7 +65,7 @@ export function LegBuyInsPage() {
 
       <div className="mt-4">
         {showAddParticipant ? (
-          <div className="rounded-lg border border-slate-200 p-3">
+          <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">
             <PlayerMultiSelect
               selectedIds={newParticipantIds}
               onChange={setNewParticipantIds}
@@ -75,7 +75,7 @@ export function LegBuyInsPage() {
               type="button"
               onClick={handleAddParticipants}
               disabled={addingParticipants || newParticipantIds.length === 0}
-              className="mt-3 w-full rounded-lg bg-slate-700 px-4 py-2 font-medium text-white disabled:opacity-50"
+              className="mt-3 w-full rounded-lg bg-slate-700 px-4 py-2 font-medium text-white disabled:opacity-50 dark:bg-slate-600"
             >
               {strings.buyIns.addPlayerToLeg}
             </button>
@@ -84,7 +84,7 @@ export function LegBuyInsPage() {
           <button
             type="button"
             onClick={() => setShowAddParticipant(true)}
-            className="w-full rounded-lg bg-slate-200 px-4 py-2 font-medium text-slate-900"
+            className="w-full rounded-lg bg-slate-200 px-4 py-2 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100"
           >
             {strings.buyIns.addPlayerToLeg}
           </button>
